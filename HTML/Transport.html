@@ -28,9 +28,9 @@
 						<a href="/index.html"><h1>The Island of Taniti</h1></a>
 					</li>
 
-					<li><a href="Plan.html">Plan Trip</a></li>
-					<li><a href="FAQ.html">FAQ</a></li>
-					<li><a href="Contact.html">Contact</a></li>
+					<li><a href="Plan.html" class="hiddenOnMobile">Plan Trip</a></li>
+					<li><a href="FAQ.html" class="hiddenOnMobile">FAQ</a></li>
+					<li><a href="Contact.html" class="hiddenOnMobile">Contact</a></li>
 					
 					<div class="upper-search-wrapper">
 						<input type="text" placeholder="Search..." class="upper-search">
@@ -182,6 +182,26 @@
 			smallVolcanoPic.style.display = 'block';
 		});
 
+		document.addEventListener("DOMContentLoaded", () => {
+
+			const textBoxes = document.querySelectorAll(".leftTextBox, .rightTextBox");
+
+			// When a text box is clicked → hide it
+			textBoxes.forEach(box => {
+				box.addEventListener("click", (event) => {
+					event.stopPropagation(); // prevents immediate restore
+					box.classList.add("hiddenBox");
+				});
+			});
+
+			// When background is clicked → restore ALL boxes
+			document.addEventListener("click", () => {
+				textBoxes.forEach(box => {
+					box.classList.remove("hiddenBox");
+				});
+			});
+
+		});
 	</script>
 </body>
 </html>

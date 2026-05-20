@@ -861,9 +861,7 @@ a {
 }
 
 @media (max-width: 900px) {
-    .topNav a[href="FAQ.html"],
-    .topNav a[href="contact.html"], 
-	.topNav a[href="Plan.html"] {
+    .hiddenOnMobile {
         display: none !important;
     }
 }
@@ -1027,6 +1025,7 @@ a {
   	.leftTextBox,
   	.rightTextBox {
 		width: 80%;
+		padding: clamp(20px, 2vw, 30px);
   	}
 
   	.leftTextBox,
@@ -1038,5 +1037,25 @@ a {
   	.rightTextBox:active {
     	opacity: 0; /* adjust transparency level */
   	}
+
+	.leftTextBox section,
+	.rightTextBox section {
+		font-size: clamp(0.35rem, 1vw, 1rem);
+	}
+
+	.topNav ul li a h1 {
+		font-size: clamp(0.5rem, 1vw, 1rem);
+		line-height: 4vw;
+	}
+}
+
+.leftTextBox,
+.rightTextBox {
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.hiddenBox {
+    opacity: 0;
+    visibility: hidden;
 }
 
