@@ -244,6 +244,41 @@
 			smallVolcanoPic.style.display = 'block';
 		});
 
+		document.addEventListener("DOMContentLoaded", () => {
+
+			// Detect mobile (touchscreen)
+			const isMobile = window.matchMedia("(max-width: 768px)").matches;
+
+			if (!isMobile) return; // Desktop: do nothing
+
+			const gridItems = document.querySelectorAll(".activity-card");
+			let activeItem = null;
+
+			gridItems.forEach(item => {
+				item.addEventListener("click", (event) => {
+					event.stopPropagation();
+
+					// If this item is already active → second tap → follow link
+					if (activeItem === item) {
+						const link = item.dataset.link;
+						if (link) window.location.href = link;
+						return;
+					}
+
+					// First tap → show photo
+					gridItems.forEach(i => i.classList.remove("showPhoto"));
+					item.classList.add("showPhoto");
+					activeItem = item;
+				});
+			});
+
+			// Tap outside → reset all
+			document.addEventListener("click", () => {
+				gridItems.forEach(i => i.classList.remove("showPhoto"));
+				activeItem = null;
+			});
+
+		});
 	</script>
 </body>
 </html>
