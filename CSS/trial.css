@@ -1060,7 +1060,7 @@ a {
 }
 
 @media (max-width: 768px) {
-	.activity-card.showPhoto .activity-hover-image {
+	.activity-card.showPhoto .activity-hover-img {
 		opacity: 1;
 		visibility: visible;
 	}

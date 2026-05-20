@@ -246,39 +246,56 @@
 
 		document.addEventListener("DOMContentLoaded", () => {
 
-			// Detect mobile (touchscreen)
-			const isMobile = window.matchMedia("(max-width: 768px)").matches;
+		const cards = document.querySelectorAll(".activity-card");
+		let activeCard = null;
 
-			if (!isMobile) return; // Desktop: do nothing
+		function isMobile() {
+			return window.matchMedia("(max-width: 768px)").matches;
+		}
 
-			const gridItems = document.querySelectorAll(".activity-card");
-			let activeItem = null;
+		cards.forEach(card => {
 
-			gridItems.forEach(item => {
-				item.addEventListener("click", (event) => {
-					event.stopPropagation();
+			const linkElement = card.querySelector("a");
 
-					// If this item is already active → second tap → follow link
-					if (activeItem === item) {
-						const link = item.dataset.link;
-						if (link) window.location.href = link;
-						return;
+			// Prevent <a> from navigating on first tap
+			if (linkElement) {
+				linkElement.addEventListener("click", (e) => {
+					if (isMobile()) {
+						e.preventDefault();
 					}
-
-					// First tap → show photo
-					gridItems.forEach(i => i.classList.remove("showPhoto"));
-					item.classList.add("showPhoto");
-					activeItem = item;
 				});
-			});
+			}
 
-			// Tap outside → reset all
-			document.addEventListener("click", () => {
-				gridItems.forEach(i => i.classList.remove("showPhoto"));
-				activeItem = null;
-			});
+			card.addEventListener("click", (event) => {
 
+				if (!isMobile()) return; // desktop: ignore click logic
+
+				event.stopPropagation();
+
+				// Second tap → navigate
+				if (activeCard === card) {
+					if (linkElement) {
+						window.location.href = linkElement.href;
+					}
+					return;
+				}
+
+				// First tap → show photo
+				cards.forEach(c => c.classList.remove("showPhoto"));
+				card.classList.add("showPhoto");
+				activeCard = card;
+			});
 		});
+
+		// Tap background → reset
+		document.addEventListener("click", () => {
+			if (!isMobile()) return;
+			cards.forEach(c => c.classList.remove("showPhoto"));
+			activeCard = null;
+		});
+
+	});
+	
 	</script>
 </body>
 </html>
